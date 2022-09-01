@@ -36,13 +36,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-
-
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMemoryCache();
+
 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
 
@@ -63,6 +63,8 @@ builder.Services.AddDbContext<AppDbContext>( x=>
     x.EnableSensitiveDataLogging();
 });
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,6 +72,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
 app.UseHttpsRedirection();

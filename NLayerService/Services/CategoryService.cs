@@ -4,7 +4,6 @@ using NLayer.Core.Models;
 using NLayer.Core.Repository;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
-using System.Linq.Expressions;
 
 namespace NLayer.Service.Services
 {
@@ -27,7 +26,7 @@ namespace NLayer.Service.Services
 
             var categoryDto = _mapper.Map<CategoryWithProductsDto>(category);
 
-            return CustomResponseDto<CategoryWithProductsDto>.Success(200,categoryDto);
+            return CustomResponseDto<CategoryWithProductsDto>.Success(200, categoryDto);
         }
     }
 }

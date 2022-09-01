@@ -1,13 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NLayer.Core.Models;
-using NLayer.Repository.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Repository
 {
@@ -16,7 +9,7 @@ namespace NLayer.Repository
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-         
+
 
         }
         public DbSet<Category> Categories { get; set; }
@@ -28,6 +21,56 @@ namespace NLayer.Repository
         // Her product olusturuldugunda   ProductFeatures olusturabiliriz
         //ProductFeatures bagimsiz eklenmemeli
         public DbSet<ProductFeature> ProductFeatures { get; set; }
+
+        public override int SaveChanges()
+        {
+            foreach (var item in ChangeTracker.Entries())
+            {
+                if (item.Entity is BaseEntity entityReference)
+                {
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                entityReference.CreatedTime = DateTime.Now;
+                                break;
+                            }
+                        case EntityState.Modified:
+                            {
+                                entityReference.UpdateDate = DateTime.Now;
+                                break;
+                            }
+                    }
+                }
+            }
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+
+            foreach(var item in ChangeTracker.Entries())
+            {
+                if(item.Entity is BaseEntity entityReference)
+                {
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                entityReference.CreatedTime = DateTime.Now;
+                                break;
+                            }
+                        case EntityState.Modified:
+                            {
+                                entityReference.UpdateDate = DateTime.Now;
+                                break;
+                            }
+                    }
+                }
+            }
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,8 +99,8 @@ namespace NLayer.Repository
                             Width = 100,
                             ProductId = 2
                         }
-                
-                
+
+
                 );
 
             base.OnModelCreating(modelBuilder);

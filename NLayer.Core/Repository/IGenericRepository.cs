@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace NLayer.Core.Repository
 {
@@ -18,7 +13,7 @@ namespace NLayer.Core.Repository
         //productRepository.where(x => x.id >5 ).OrderBy.ToListAsync()
         // eger IQueryable yerine List kullanilirsa where ifadesini yazdiktan sonra datayi ceker memory'e alir daha sonra orderby komutunu calistirir.
         // Expression<Func<T,bool> nedir T entity alacak x mesela bool ise yukaridaki gibi 5 den buyuk mu degil bir deger donecek
-        IQueryable<T> Where(Expression<Func<T,bool>> expression);
+        IQueryable<T> Where(Expression<Func<T, bool>> expression);
         Task<bool> AnyAsync(Expression<Func<T, bool>> expression);
 
 

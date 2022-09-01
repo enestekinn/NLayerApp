@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using NLayer.Core.Repository;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace NLayer.Repository.Repositories
 {
@@ -26,14 +21,14 @@ namespace NLayer.Repository.Repositories
             await _dbSet.AddAsync(entity);
         }
 
-        public async  Task AddRangeAsync(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
-           await _dbSet.AddRangeAsync(entities);
+            await _dbSet.AddRangeAsync(entities);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)
         {
-            
+
             return await _dbSet.AnyAsync(expression);
         }
 
@@ -42,7 +37,7 @@ namespace NLayer.Repository.Repositories
             return _dbSet.AsTracking().AsQueryable();
         }
 
-        public async  Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -64,7 +59,7 @@ namespace NLayer.Repository.Repositories
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-           return _dbSet.Where(expression);
+            return _dbSet.Where(expression);
         }
     }
 }
